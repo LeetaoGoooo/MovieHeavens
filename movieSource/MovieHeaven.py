@@ -108,18 +108,23 @@ class MovieHeaven(SearchMovieParent):
 
 
 		def __getMovieDownUrl(self,downPageUrlList):
-			resultsList = []
+			"""
 			for url in downPageUrlList:
-				downPageContentUrl = self.__downloadDomain + str(url)
-				downPageContent = self.__searchMoviesResults(downPageContentUrl)
-				resultsList.append(self.__getDownPageContentUrl(downPageContent))
+			 	downPageContentUrl = self.__downloadDomain + str(url)
+			 	downPageContent = self.__searchMoviesResults(downPageContentUrl)
+			 	resultsList.append(self.__getDownPageContentUrl(downPageContent))
+			"""
+			resultsList = []
+			downPageContentList = []
+			downPageContentUrlList = [(self.__downloadDomain + url) for url in downPageUrlList]
+			resultsList.append(map(self.__getDownPageContentUrl,map(self.__searchMoviesResults,downPageContentUrlList)))
 			return resultsList
 
 		def __getDownPageContentUrl(self,downPageContent):
 			downPattern = re.compile(r'<td.+><a\s+href="(.+)"\s*>')	
 			ftpUrlList = downPattern.findall(downPageContent)
 			if len(ftpUrlList) > 0:
-				self.__writeResults(downPageContent,'downPageContent',)
+				#self.__writeResults(downPageContent,'downPageContent',)
 				ftpUrl = ftpUrlList[0]
 			else:
 				ftpUrl = "unknown url"
@@ -133,5 +138,4 @@ class MovieHeaven(SearchMovieParent):
 				return ['Not Found']
 			else:
 				allDownLoadUrlList =  self.__getMovieDownUrl(urlList)
-				#print allDownLoadUrlList
-				return allDownLoadUrlList
+				return allDownLoadUrlList[0]

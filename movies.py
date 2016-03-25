@@ -6,6 +6,7 @@ from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 from movieSource.MovieHeaven import MovieHeaven
 from movieSource.pianYuan import pianYuan
+import time
 """
 http://s.kujian.com/plus/search.php?kwtype=0&searchtype=title&keyword=
 """

@@ -40,6 +40,9 @@ class pianYuan(SearchMovieParent):
 			completeUrl = self.__domain + str(url)
 			downpageContent = self.__searchMovieResults(completeUrl)
 			downUrlList.append(self.__getDownLoadUrl(downpageContent))
+		# downpageContentUrlList = []
+		# downpageContentUrlList = [(self.__domain + url) for url in downPageUrlList]
+		# downUrlList.append(map(self.__getDownLoadUrl,map(self.__searchMovieResults,downpageContentUrlList)))
 		return downUrlList
 
 	def __getDownLoadUrl(self,downpageContent):
