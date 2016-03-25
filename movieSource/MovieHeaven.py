@@ -4,7 +4,7 @@ import re
 import urllib
 from SearchMovieParent import SearchMovieParent
 
-class SearchMovies(SearchMovieParent):
+class MovieHeaven(SearchMovieParent):
 		"""
 		对抓取页面进行分析
 		爬虫主体	
@@ -14,6 +14,7 @@ class SearchMovies(SearchMovieParent):
 			self.__searchUrl = "http://s.kujian.com/plus/search.php"
 			self.__searchDomain = 'http://s.kujian.com'
 			self.__downloadDomain = 'http://www.ygdy8.com'
+			self.__params = {"kwtype":"0","searchtype":"title","keyword":"leetao"}
 
 		def __searchMoviesResults(self,url=None,params=None):
 			"""
@@ -26,7 +27,10 @@ class SearchMovies(SearchMovieParent):
 				else:
 					tempResults = requests.get(url)
 			else:
-				tempResults = requests.get(self.__searchUrl,params)
+				if params is not None:
+					tempResults = requests.get(self.__searchUrl,params=params)
+				else:
+					tempResults = requests.get(url)
 			tempResults.encoding = 'gb2312'
 			return tempResults.text
 
@@ -125,9 +129,9 @@ class SearchMovies(SearchMovieParent):
 		def getDisplayContent(self,url,params=None):
 			urlList = self.__getMovieContentsUrl(url,params)
 			if len(urlList) == 0:
-				print('Not Found')
+				#print('Not Found')
 				return ['Not Found']
 			else:
 				allDownLoadUrlList =  self.__getMovieDownUrl(urlList)
-				print allDownLoadUrlList
+				#print allDownLoadUrlList
 				return allDownLoadUrlList
