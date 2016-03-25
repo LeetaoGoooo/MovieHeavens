@@ -16,7 +16,7 @@ class LayoutDialog(QDialog):
 	def __init__(self,parent=None):
 		super(LayoutDialog,self).__init__(parent)
 		self.setWindowTitle(self.tr("Search Movies"))
-
+		self.setWindowIcon(QIcon('./searchMovies.ico'))
 		self.movieNameLabel = QLabel(self.tr("电影名称:"))
 		self.movieNameLineEdit = QLineEdit()
 
@@ -41,6 +41,7 @@ class LayoutDialog(QDialog):
 
 		self.setLayout(topLayout)
 		self.connect(self.searchPushButton,SIGNAL("clicked()"),self.search)
+		self.searchContentTextList.itemClicked.connect(self.CopyText)
 
 	def search(self):
 			movieName = self.movieNameLineEdit.text()
@@ -51,6 +52,12 @@ class LayoutDialog(QDialog):
 				self.searchContentTextList.addItems(moviesList)
 			else:
 				self.Critical()
+
+	def CopyText(self):
+		copytext = self.searchContentTextList.currentItem().text()
+		QApplication.clipboard().clear()
+		QApplication.clipboard().setText(copytext)
+		self.slotInformation()
 
 	def getSelectMovieSource(self,movieName):
 		"""
@@ -82,6 +89,9 @@ class LayoutDialog(QDialog):
 		QMessageBox.critical(self,self.tr("致命错误"),
 		self.tr("请输入电影名称!"))
 
+	def slotInformation(self):
+		QMessageBox.information(self,"Success!",self.tr("成功将内容复制到剪贴板上!"))  
+	
 app = QApplication(sys.argv)
 dialog = LayoutDialog()
 dialog.show()
