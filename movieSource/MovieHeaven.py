@@ -2,6 +2,7 @@
 import requests
 import re
 import urllib
+from multiprocessing.dummy import Pool as ThreadPool 
 from SearchMovieParent import SearchMovieParent
 
 class MovieHeaven(SearchMovieParent):
@@ -10,6 +11,7 @@ class MovieHeaven(SearchMovieParent):
 		爬虫主体	
 		"""	
 		def __init__(self,parent=None):
+			self.__pool = ThreadPool(8)
 			self.__AllPageDetailsUrlList = []
 			self.__searchUrl = "http://s.kujian.com/plus/search.php"
 			self.__searchDomain = 'http://s.kujian.com'
@@ -117,7 +119,9 @@ class MovieHeaven(SearchMovieParent):
 			resultsList = []
 			downPageContentList = []
 			downPageContentUrlList = [(self.__downloadDomain + url) for url in downPageUrlList]
-			resultsList.append(map(self.__getDownPageContentUrl,map(self.__searchMoviesResults,downPageContentUrlList)))
+			resultsList.append(self.__pool.map(self.__getDownPageContentUrl,self.__pool.map(self.__searchMoviesResults,downPageContentUrlList)))
+			self.__pool.close()
+			self.__pool.join()
 			return resultsList
 
 		def __getDownPageContentUrl(self,downPageContent):
