@@ -50,21 +50,11 @@ class LayoutDialog(QDialog):
 		self.connect(self.searchPushButton,SIGNAL("clicked()"),self.search)
 		self.searchContentTextList.itemClicked.connect(self.CopyText)
 
-	def GetRunTime(func):
-		def wrapper(*args,**kw):
-			startTime = datetime.datetime.now()
-			f = func(*args,**kw)
-			endTime = datetime.datetime.now()
-			print (endTime - startTime)
-			return f
-		return wrapper
-
-	#@GetRunTime
 	def search(self):
 		self.tipLabel.setText(self.tr("正在查询请稍后..."))
 		movieName = self.movieNameLineEdit.text()
 		if movieName:
-			self.work.render(movieName,self.movieSourceComboBox,self.tipLabel,self.searchContentTextList,self.Critical)
+			self.work.render(movieName,self.movieSourceComboBox,self.tipLabel,self.searchContentTextList)
 		else:
 			self.Critical("请输入电影名称!")
 	
@@ -91,9 +81,17 @@ class WorkThread(QThread):
 	def __init__(self):
 		QThread.__init__(self)
 
-	def render(self,movieName,movieSourceComboBox,tipLabel,searchContentTextList,Critical):
+	def GetRunTime(func):
+		def wrapper(*args,**kw):
+			startTime = datetime.datetime.now()
+			f = func(*args,**kw)
+			endTime = datetime.datetime.now()
+			print (endTime - startTime)
+			return f
+		return wrapper
+
+	def render(self,movieName,movieSourceComboBox,tipLabel,searchContentTextList):
 		self.moviesList = []
-		self.Critical = Critical
 		self.movieSourceComboBox = movieSourceComboBox
 		self.movieName = movieName
 		self.tipLabel =  tipLabel
@@ -121,13 +119,12 @@ class WorkThread(QThread):
 			params['q'] = movieName
 		return Movies,Url,params
 
-	
+	#@GetRunTime
 	def run(self):
 		SearchMovies,Url,params = self.getSelectMovieSource(self.movieName)
 		try:
 			self.moviesList = SearchMovies.getDisplayContent(Url,params)
 		except Exception, e:
-			self.Critical("您查询过于频繁~请休息一会")
 			self.moviesList = []
 			self.moviesList.append(self.tr("过于频繁的访问"))
 		finally:
