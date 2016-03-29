@@ -17,6 +17,7 @@ QTextCodec.setCodecForTr(QTextCodec.codecForName("utf8"))
 class LayoutDialog(QDialog):
 	def __init__(self,parent=None):
 		super(LayoutDialog,self).__init__(parent)
+		self.work = WorkThread()
 
 		self.setWindowTitle(self.tr("Search Movies"))
 		self.setWindowIcon(QIcon('./searchMovies.ico'))
@@ -63,26 +64,41 @@ class LayoutDialog(QDialog):
 		self.tipLabel.setText(self.tr("正在查询请稍后..."))
 		movieName = self.movieNameLineEdit.text()
 		if movieName:
-			SearchMovies,searchUrl,params = self.getSelectMovieSource(movieName)
-			try:
-				moviesList = SearchMovies.getDisplayContent(searchUrl,params)
-			except Exception, e:
-				self.Critical("您查询过于频繁~请休息一会")
-				moviesList = []
-				moviesList.append(self.tr("过于频繁的访问"))
-			finally:
-				self.searchContentTextList.clear()
-				self.searchContentTextList.addItems(moviesList)
-				self.tipLabel.setText(self.tr("查询结束"))
+			self.work.render(movieName,self.movieSourceComboBox,self.tipLabel,self.searchContentTextList,self.Critical)
 		else:
 			self.Critical("请输入电影名称!")
 	
+	def Critical(self,message):
+		"""
+		when the movieName is None,
+		remain users
+
+		"""
+		QMessageBox.critical(self,self.tr("致命错误"),
+		self.tr(message))
 
 	def CopyText(self):
 		copytext = self.searchContentTextList.currentItem().text()
 		QApplication.clipboard().clear()
 		QApplication.clipboard().setText(copytext)
-		self.slotInformation()
+		self.slotInformation()	
+
+	def slotInformation(self):
+		QMessageBox.information(self,"Success!",self.tr("成功将内容复制到剪贴板上!"))  
+
+
+class WorkThread(QThread):
+	def __init__(self):
+		QThread.__init__(self)
+
+	def render(self,movieName,movieSourceComboBox,tipLabel,searchContentTextList,Critical):
+		self.moviesList = []
+		self.Critical = Critical
+		self.movieSourceComboBox = movieSourceComboBox
+		self.movieName = movieName
+		self.tipLabel =  tipLabel
+		self.searchContentTextList = searchContentTextList
+		self.start()
 
 	def getSelectMovieSource(self,movieName):
 		"""
@@ -104,26 +120,20 @@ class LayoutDialog(QDialog):
 			params = {}
 			params['q'] = movieName
 		return Movies,Url,params
+
 	
-	def Critical(self,message):
-		"""
-		when the movieName is None,
-		remain users
-
-		"""
-		QMessageBox.critical(self,self.tr("致命错误"),
-		self.tr(message))
-
-	def slotInformation(self):
-		QMessageBox.information(self,"Success!",self.tr("成功将内容复制到剪贴板上!"))  
-
-
-class WorkThread(QThread):
-	def __init__(self):
-		QThread.__init__(self)
-
 	def run(self):
-		self.emit(SIGNAL("search"))
+		SearchMovies,Url,params = self.getSelectMovieSource(self.movieName)
+		try:
+			self.moviesList = SearchMovies.getDisplayContent(Url,params)
+		except Exception, e:
+			self.Critical("您查询过于频繁~请休息一会")
+			self.moviesList = []
+			self.moviesList.append(self.tr("过于频繁的访问"))
+		finally:
+			self.searchContentTextList.clear()
+			self.searchContentTextList.addItems(self.moviesList)
+			self.tipLabel.setText(self.tr("查询结束"))
 
 
 
