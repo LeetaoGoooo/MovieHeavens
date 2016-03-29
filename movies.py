@@ -8,15 +8,17 @@ from movieSource.MovieHeaven import MovieHeaven
 from movieSource.pianYuan import pianYuan
 import time
 import datetime
+import helpUI
 """
 http://s.kujian.com/plus/search.php?kwtype=0&searchtype=title&keyword=
 """
 
 QTextCodec.setCodecForTr(QTextCodec.codecForName("utf8"))
 
-class LayoutDialog(QDialog):
+class LayoutDialog(QDialog,helpUI.Ui_Dialog):
 	def __init__(self,parent=None):
 		super(LayoutDialog,self).__init__(parent)
+		self.setupUi(self)
 		self.work = WorkThread()
 
 		self.setWindowTitle(self.tr("Search Movies"))
@@ -131,7 +133,6 @@ class WorkThread(QThread):
 			self.searchContentTextList.clear()
 			self.searchContentTextList.addItems(self.moviesList)
 			self.tipLabel.setText(self.tr("查询结束"))
-
 
 
 app = QApplication(sys.argv)
