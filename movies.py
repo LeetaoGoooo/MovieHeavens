@@ -127,6 +127,7 @@ class WorkThread(QThread):
 		try:
 			self.moviesList = SearchMovies.getDisplayContent(Url,params)
 		except Exception, e:
+			print e
 			self.moviesList = []
 			self.moviesList.append(self.tr("过于频繁的访问"))
 		finally:
