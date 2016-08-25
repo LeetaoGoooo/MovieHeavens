@@ -13,8 +13,8 @@ class MovieHeaven(SearchMovieParent):
 		def __init__(self,parent=None):
 			self.__pool = ThreadPool(8)
 			self.__AllPageDetailsUrlList = []
-			self.__searchUrl = "http://s.kujian.com/plus/search.php"
-			self.__searchDomain = 'http://s.kujian.com'
+			self.__searchUrl = "http://s.dydytt.net/plus/search.php"
+			self.__searchDomain = 'http://s.dydytt.net'
 			self.__downloadDomain = 'http://www.ygdy8.com'
 			self.__params = {"kwtype":"0","searchtype":"title","keyword":"leetao"}
 

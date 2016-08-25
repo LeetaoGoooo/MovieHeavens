@@ -61,7 +61,7 @@ class pianYuan(SearchMovieParent):
 		searchMovieResults = self.__searchMovieResults(url,params)
 		MovieDetailsPage = self.__getMovieDetailsPage(searchMovieResults)
 		btDownLoadUrlList = self.__getDownUrlList(MovieDetailsPage)
-		if len(btDownLoadUrlList) > 0:
+		if len(btDownLoadUrlList[0]) > 0:
 			return btDownLoadUrlList[0]
 		else:
 			return ['Not Found']

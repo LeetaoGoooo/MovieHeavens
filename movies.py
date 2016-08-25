@@ -110,7 +110,7 @@ class WorkThread(QThread):
 			movieName =  unicode(movieName.toUtf8(),'utf8','ignore')
 			movieName = movieName.encode('gb2312')
 			Movies = MovieHeaven()
-			Url = "http://s.kujian.com/plus/search.php"
+			Url = "http://s.dydytt.net/plus/search.php"
 			params = {"kwtype":"0","searchtype":"title"}
 			params["keyword"] = movieName
 		elif selectSouce == self.tr('片源网'):
