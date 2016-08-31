@@ -23,5 +23,9 @@ python movies.py
 - [ ] 添加高清Mp4吧的片源,仅能提供结果页的百度云链接,以及提取密码
 - [ ] 添加bt种子搜索
 
+### 其他版本
+[Nodejs版](https://github.com/lt94/Electron-Practice/tree/master/MovieHeavens)<p>
 ### 最后
 使用过程中如果发现无法检索到结果,应该是网站发生了更新。<p>
+
+
