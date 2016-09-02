@@ -1,0 +1,6 @@
+// 将设置放入此文件中以覆盖默认设置
+{
+    "editor.fontSize": 16,
+    "python.linting.flake8Enabled": true,
+    "editor.fontFamily": "Monaco,Consolas, 'Courier New', monospace"
+}

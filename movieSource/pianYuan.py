@@ -65,4 +65,3 @@ class pianYuan(SearchMovieParent):
 			return btDownLoadUrlList[0]
 		else:
 			return ['Not Found']
-

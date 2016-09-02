@@ -20,7 +20,7 @@ python movies.py
 [百度云链接](http://pan.baidu.com/s/1pLTJpkZ)
 
 ### 待完成
-- [ ] 添加高清Mp4吧的片源,仅能提供结果页的百度云链接,以及提取密码
+- [x] 添加高清Mp4吧的片源
 - [ ] 添加bt种子搜索
 
 ### 最后
