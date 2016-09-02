@@ -16,8 +16,13 @@
 ```python
 python movies.py
 ```
-2. exe程序 <p>
+2. exe程序 <p>暂未更新到最新版
 [百度云链接](http://pan.baidu.com/s/1pLTJpkZ)
+
+### 使用截图
+![](http://ww3.sinaimg.cn/large/d9e82fa4jw1f7fhto35i1j20bp09ewh6.jpg) <p>
+![](http://ww1.sinaimg.cn/large/d9e82fa4jw1f7fhu0fngnj20bp09eacs.jpg) <p>
+![](http://ww2.sinaimg.cn/large/d9e82fa4jw1f7fhu8rpboj20bp09e76s.jpg) 
 
 ### 待完成
 - [x] 添加高清Mp4吧的片源
