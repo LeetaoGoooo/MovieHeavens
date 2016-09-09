@@ -31,6 +31,8 @@ python movies.py
 ### 其他版本
 [Nodejs版](https://github.com/lt94/Electron-Practice/tree/master/MovieHeavens)<p>
 [Android版完善中](https://github.com/lt94/Android/tree/master/SearchMovies)<p>
+效果如下:<p>
+![](http://ww1.sinaimg.cn/large/d9e82fa4jw1f7nbrv5awxg207i0dcdka.gif)
 ### 最后
 使用过程中如果发现无法检索到结果,应该是网站发生了更新。<p>
 
