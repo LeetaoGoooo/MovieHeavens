@@ -18,6 +18,7 @@ python movies.py
 ```
 2. exe程序 <p>暂未更新到最新版
 [百度云链接](http://pan.baidu.com/s/1pLTJpkZ)
+[最新版](https://pan.baidu.com/s/1miEXVG8)
 
 ### 使用
 ![](http://ww2.sinaimg.cn/large/d9e82fa4jw1f7nembhbr1g20dq09nna1.gif)
