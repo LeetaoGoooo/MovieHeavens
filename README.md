@@ -28,7 +28,7 @@ python movies.py
 - [ ] 添加bt种子搜索
 
 ### 其他版本
-[Nodejs版](https://github.com/lt94/Electron-Practice/tree/master/MovieHeavens)<p>
+[Electron版本](https://github.com/lt94/electron-searchMovies)<p>
 [Android版完善中](https://github.com/lt94/Android/tree/master/SearchMovies)<p>
 效果如下:<p>
 ![](http://ww1.sinaimg.cn/large/d9e82fa4jw1f7nbrv5awxg207i0dcdka.gif)
