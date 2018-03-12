@@ -13,8 +13,8 @@ class MovieHeaven(SearchMovieParent):
 		def __init__(self,parent=None):
 			self.__pool = ThreadPool(8)
 			self.__AllPageDetailsUrlList = []
-			self.__searchUrl = "http://s.dydytt.net/plus/search.php"
-			self.__searchDomain = 'http://s.dydytt.net'
+			self.__searchUrl = "http://s.ygdy8.com/plus/so.php"
+			self.__searchDomain = 'http://s.ygdy8.com'
 			self.__downloadDomain = 'http://www.ygdy8.com'
 			self.__params = {"kwtype":"0","searchtype":"title","keyword":"leetao"}
 
@@ -24,7 +24,8 @@ class MovieHeaven(SearchMovieParent):
 			"""
 			if url is not None:
 				if params is not None:
-					params = urllib.urlencode(params)
+					params['keyword'] = params['keyword'].encode('gb2312')
+					params = urllib.parse.urlencode(params)
 					tempResults = requests.get(url,params=params)
 				else:
 					tempResults = requests.get(url)
@@ -86,7 +87,6 @@ class MovieHeaven(SearchMovieParent):
 				all_the_text = readAll.read()
 			finally:
 				readAll.close()
-			print('doing')
 			#self.getMoviesDetailPage(all_the_text)
 			self.nextPageDetail(all_the_text)
 		
