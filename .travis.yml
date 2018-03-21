@@ -2,7 +2,7 @@ language: python
 python:
   - "3.6"
 install:
-  - "sudo apt-get install python3-pyqt5"
+  - "sudo apt-get install python3-pyqt4"
   - "pip install -r requirements.txt"
 script:
   - python movies.py
