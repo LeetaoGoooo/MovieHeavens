@@ -30,6 +30,16 @@ python3 movies.py
 
 ### 捐赠
 
-![](http://ww1.sinaimg.cn/large/006wYWbGly1fm10itkjb6j30aj0a9t8w.jpg)
+如果我的项目对您有帮助，欢迎捐赠
 
-![](http://ww1.sinaimg.cn/large/006wYWbGly1fm10jihygsj309r09tglw.jpg)
+<table>
+  <tr>
+    <th width="50%">支付宝</th>
+    <th width="50%">微信</th>
+  </tr>
+  <tr></tr>
+  <tr align="center">
+    <td><img width="70%" src="http://ww1.sinaimg.cn/large/006wYWbGly1fm10itkjb6j30aj0a9t8w.jpg"></td>
+    <td><img width="70%" src="http://ww1.sinaimg.cn/large/006wYWbGly1fm10jihygsj309r09tglw.jpg"></td>
+  </tr>
+</table>
