@@ -3,7 +3,7 @@ import requests
 import re
 import urllib
 from multiprocessing.dummy import Pool as ThreadPool 
-from SearchMovieParent import SearchMovieParent
+from .SearchMovieParent import SearchMovieParent
 
 class MovieHeaven(SearchMovieParent):
 		"""
@@ -142,4 +142,5 @@ class MovieHeaven(SearchMovieParent):
 				return ['Not Found']
 			else:
 				allDownLoadUrlList =  self.__getMovieDownUrl(urlList)
-				return allDownLoadUrlList[0]
+				movie_list = [url for url in allDownLoadUrlList[0] if url[-3:] not in ['zip','rar','exe'] and url != "unknown url"]
+				return movie_list

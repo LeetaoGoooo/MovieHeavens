@@ -1,12 +1,8 @@
 # -*- encoding:utf-8 -*-
 import sys
-reload(sys)
-sys.setdefaultencoding("utf-8")
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 from movieSource.MovieHeaven import MovieHeaven
-from movieSource.pianYuan import pianYuan
-from movieSource.Mp4 import Mp4
 import time
 import datetime
 import helpUI
@@ -31,8 +27,6 @@ class LayoutDialog(QDialog,helpUI.Ui_Dialog):
 		self.movieSourceLabel = QLabel(self.tr("选择片源:"))
 		self.movieSourceComboBox = QComboBox()
 		self.movieSourceComboBox.addItem(self.tr('电影天堂'))
-		self.movieSourceComboBox.addItem(self.tr('片源网'))
-		self.movieSourceComboBox.addItem(self.tr('Mp4吧'))
 
 		self.searchPushButton = QPushButton(self.tr("查询"))
 
@@ -109,34 +103,19 @@ class WorkThread(QThread):
 		"""
 		selectSouce = self.movieSourceComboBox.currentText()
 		if selectSouce == self.tr('电影天堂'):
-			movieName =  unicode(movieName.toUtf8(),'utf8','ignore')
-			movieName = movieName.encode('gb2312')
 			Movies = MovieHeaven()
 			Url = "http://s.dydytt.net/plus/search.php"
 			params = {"kwtype":"0","searchtype":"title"}
 			params["keyword"] = movieName
-		elif selectSouce == self.tr('片源网'):
-			Movies = pianYuan()
-			Url = "http://pianyuan.net/search"
-			movieName =  unicode(movieName.toUtf8(),'utf8','ignore')
-			params = {}
-			params['q'] = movieName
-		elif selectSouce == self.tr('Mp4吧'):
-			Movies = Mp4()
-			Url = 'http://www.mp4ba.com/search.php'
-			movieName = unicode(movieName.toUtf8(),'utf8','ignore')
-			params = {}
-			params['keyword'] = movieName
 		return Movies,Url,params
 
 	#@GetRunTime
 	def run(self):
 		SearchMovies,Url,params = self.getSelectMovieSource(self.movieName)
 		try:
-			print Url,params
 			self.moviesList = SearchMovies.getDisplayContent(Url,params)
-		except Exception, e:
-			print e
+		except Exception as e:
+			print(e)
 			self.moviesList = []
 			self.moviesList.append(self.tr("过于频繁的访问"))
 		finally:
