@@ -5,4 +5,4 @@ install:
   - "sudo apt-get install python3-pyqt4"
   - "pip install -r requirements.txt"
 script:
-  - python movies.py
+  - python3 movies.py
