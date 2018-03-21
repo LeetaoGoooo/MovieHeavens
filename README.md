@@ -20,6 +20,17 @@
 python3 movies.py
 ```
 
+### 打包
+
+```shell
+sudo apt-get install python3-pip
+pip3 install pyinstaller
+bash build.sh
+```
+
+然后会在当前文件夹生成俩个目录,其中<code>dist</code>目录有个可执行的程序
+
+
 ![](http://ww2.sinaimg.cn/large/d9e82fa4jw1f7nembhbr1g20dq09nna1.gif)
 
 注意:之前打包的程序已经失效
