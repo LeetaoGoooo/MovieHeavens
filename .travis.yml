@@ -1,8 +1,0 @@
-language: python
-python:
-  - "3.5.2"
-install:
-  - "sudo apt-get install python3-pyqt4  python3-pip"
-  - "pip3 install -r requirements.txt"
-script:
-  - python movies.py
