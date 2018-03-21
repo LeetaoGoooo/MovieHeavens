@@ -30,6 +30,6 @@ python3 movies.py
 
 ### 捐赠
 
-![](http://ss1.sinaimg.cn/large/006wYWbGly1fpkplpr6rkj308m08it9l&690)
+![](http://ww1.sinaimg.cn/large/006wYWbGly1fm10itkjb6j30aj0a9t8w.jpg)
 
-![](http://ss1.sinaimg.cn/large/006wYWbGly1fpkpmbpuxwj308e08ggmn&690)
+![](http://ww1.sinaimg.cn/large/006wYWbGly1fm10jihygsj309r09tglw.jpg)
