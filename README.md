@@ -44,14 +44,6 @@ pyinstaller -F -w ./movies.py ./helpUI.py ./movieSource/__init__.py  ./movieSour
 
 ![](http://ww2.sinaimg.cn/large/d9e82fa4jw1f7nembhbr1g20dq09nna1.gif)
 
-注意:之前打包的程序已经失效
-
-### 下载地址
-
-[Linux版本](https://pan.baidu.com/s/1Pd3NrJRmsPeZmJrIbCxJAA)
-
-[Windows版本](https://pan.baidu.com/s/1xVwUSlA4mAp-YQjPSUirlw)
-
 ### 其他版本
 
 [Electron版本](https://github.com/lt94/electron-searchMovies)
