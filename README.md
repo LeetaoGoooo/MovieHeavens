@@ -1,5 +1,6 @@
 # MovieHeavens
-### 基于Pyqt4的电影天堂电影搜索工具
+
+基于Pyqt4的电影天堂电影搜索工具
 
 ### 关于开发
 最初为了避免找电影期间的各种广告,以及各种页面跳转
@@ -11,7 +12,6 @@
 1. 重新更新了电影天堂的搜索
 2. 将 python 由 2 切换到 3
 
-
 ### 使用
 
 命令行下
@@ -22,10 +22,21 @@ python3 movies.py
 
 ### 打包
 
+Linux下
+
 ```shell
 sudo apt-get install python3-pip
 pip3 install pyinstaller
 bash build.sh
+```
+
+Windows下
+
+```shell
+# only python3 is supported
+pip install pyinstaller
+# -w 不能省略,不然会运行过程中会控制台界面
+pyinstaller -F -w ./movies.py ./helpUI.py ./movieSource/__init__.py  ./movieSource/MovieHeaven.py ./movieSource/SearchMovieParent.py 
 ```
 
 然后会在当前文件夹生成俩个目录,其中<code>dist</code>目录有个可执行的程序
@@ -35,8 +46,14 @@ bash build.sh
 
 注意:之前打包的程序已经失效
 
+### 下载地址
+
+[Linux版本](https://pan.baidu.com/s/1Pd3NrJRmsPeZmJrIbCxJAA)
+
+[Windows版本](https://pan.baidu.com/s/1xVwUSlA4mAp-YQjPSUirlw)
 
 ### 其他版本
+
 [Electron版本](https://github.com/lt94/electron-searchMovies)
 
 ### 捐赠

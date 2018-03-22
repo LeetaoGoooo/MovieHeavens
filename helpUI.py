@@ -32,5 +32,5 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(_translate("Dialog", "Dialog", None))
-        Dialog.setWhatsThis(_translate("Dialog", "<html><head/><body><p>这个一个基于pyqt4的电影搜索程序，如果在使用中有任何问题，欢迎Email to 501257367@qq.com</p></body></html>", None))
+        Dialog.setWhatsThis(_translate("Dialog", "<html><head/><body><p>这个一个基于pyqt4的电影搜索程序，如果在使用中有任何问题,发起相关issue</p></body></html>", None))
 

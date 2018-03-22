@@ -1,0 +1,1 @@
+pyinstaller -F ./movies.py ./helpUI.py ./movieSource/__init__.py  ./movieSource/MovieHeaven.py ./movieSource/SearchMovieParent.py
