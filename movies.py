@@ -6,9 +6,6 @@ from movieSource.MovieHeaven import MovieHeaven
 import time
 import datetime
 import helpUI
-"""
-http://s.kujian.com/plus/search.php?kwtype=0&searchtype=title&keyword=
-"""
 
 QTextCodec.setCodecForTr(QTextCodec.codecForName("utf8"))
 
@@ -59,8 +56,7 @@ class LayoutDialog(QDialog,helpUI.Ui_Dialog):
 	def Critical(self,message):
 		"""
 		when the movieName is None,
-		remain users
-
+		remind users
 		"""
 		QMessageBox.critical(self,self.tr("致命错误"),
 		self.tr(message))
@@ -109,7 +105,6 @@ class WorkThread(QThread):
 			params["keyword"] = movieName
 		return Movies,Url,params
 
-	#@GetRunTime
 	def run(self):
 		SearchMovies,Url,params = self.getSelectMovieSource(self.movieName)
 		try:

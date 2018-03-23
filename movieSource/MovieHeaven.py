@@ -2,6 +2,7 @@
 import requests
 import re
 import urllib
+from fake_useragent import UserAgent
 from multiprocessing.dummy import Pool as ThreadPool 
 from .SearchMovieParent import SearchMovieParent
 
@@ -10,6 +11,8 @@ class MovieHeaven(SearchMovieParent):
 		对抓取页面进行分析
 		爬虫主体	
 		"""	
+		__slots__ = ['__pool','__AllPageDetailsUrlList','__searchUrl','__searchDomain','__downloadDomain','__params']
+
 		def __init__(self,parent=None):
 			self.__pool = ThreadPool(8)
 			self.__AllPageDetailsUrlList = []
@@ -17,6 +20,9 @@ class MovieHeaven(SearchMovieParent):
 			self.__searchDomain = 'http://s.ygdy8.com'
 			self.__downloadDomain = 'http://www.ygdy8.com'
 			self.__params = {"kwtype":"0","searchtype":"title","keyword":"leetao"}
+
+		def __getHeaders(self):
+			return {"User-Agent": UserAgent().random}
 
 		def __searchMoviesResults(self,url=None,params=None):
 			"""
@@ -26,21 +32,17 @@ class MovieHeaven(SearchMovieParent):
 				if params is not None:
 					params['keyword'] = params['keyword'].encode('gb2312')
 					params = urllib.parse.urlencode(params)
-					tempResults = requests.get(url,params=params)
+					tempResults = requests.get(url,params=params,headers=self.__getHeaders())
 				else:
 					tempResults = requests.get(url)
 			else:
 				if params is not None:
-					tempResults = requests.get(self.__searchUrl,params=params)
+					tempResults = requests.get(self.__searchUrl,params=params,headers=self.__getHeaders())
 				else:
-					tempResults = requests.get(url)
+					tempResults = requests.get(url,headers=self.__getHeaders())
 			tempResults.encoding = 'gb2312'
 			return tempResults.text
 
-		def __writeResults(self,dataResults,writeTargetFile):
-			output = open(writeTargetFile,'w+')
-			output.writelines(dataResults)
-			output.close()
 
 		def __getMoviesDetailPage(self,searchResults):
 			"""
@@ -80,16 +82,6 @@ class MovieHeaven(SearchMovieParent):
 					url = self.__searchDomain + nextPageUrl + str(pageno)
 					res = self.__searchMoviesResults(url)
 					return self.__getMoviesDetailPage(res)
-
-		def __testFind(self):
-			readAll = open('data')
-			try:
-				all_the_text = readAll.read()
-			finally:
-				readAll.close()
-			#self.getMoviesDetailPage(all_the_text)
-			self.nextPageDetail(all_the_text)
-		
 
 		def __getMovieContentsUrl(self,url,params=None):
 			"""
