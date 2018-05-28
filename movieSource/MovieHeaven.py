@@ -4,8 +4,15 @@ import re
 import urllib
 from fake_useragent import UserAgent
 from multiprocessing.dummy import Pool as ThreadPool
+import sys
+
+from ._compat import PY2, url_encode
 from .SearchMovieParent import SearchMovieParent
 
+if PY2:
+    if sys.getdefaultencoding() != 'utf-8':
+        reload(sys)
+        sys.setdefaultencoding('utf-8')
 
 class MovieHeaven(SearchMovieParent):
     """
@@ -33,7 +40,7 @@ class MovieHeaven(SearchMovieParent):
         if url is not None:
             if params is not None:
                 params['keyword'] = params['keyword'].encode('gb2312')
-                params = urllib.parse.urlencode(params)
+                params = url_encode(params)
                 temp_results = requests.get(url, params=params, headers=self.__get_headers())
             else:
                 temp_results = requests.get(url)
