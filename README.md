@@ -2,7 +2,6 @@
 
 基于Pyqt5的电影天堂电影搜索工具,为了避免找电影期间的各种广告,以及各种页面跳转
 
-
 ### 使用
 
 命令行下
@@ -32,14 +31,7 @@ pyinstaller -F -w ./movies.py ./movieSource/MovieHeaven.py ./movieSource/fake_us
 
 然后会在当前文件夹生成俩个目录,其中**dist**目录有个可执行的程序
 
-
 ![](http://ww2.sinaimg.cn/large/d9e82fa4jw1f7nembhbr1g20dq09nna1.gif)
-
-### 可执行程序
-
-[Linux版本](https://pan.baidu.com/s/1Pd3NrJRmsPeZmJrIbCxJAA)
-
-[Windows版本](https://pan.baidu.com/s/1xVwUSlA4mAp-YQjPSUirlw)
 
 
 ### 交流
