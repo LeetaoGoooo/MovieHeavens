@@ -36,4 +36,4 @@ pyinstaller -F -w ./movies.py ./movieSource/MovieHeaven.py ./movieSource/fake_us
 
 ### 交流
 
-![](./resources/qcode.jpg)
+![](http://ww1.sinaimg.cn/large/006wYWbGly1g3rgqobfrpj30f00kkaaw.jpg)
