@@ -36,4 +36,6 @@ pyinstaller -F -w ./movies.py ./movieSource/MovieHeaven.py ./movieSource/fake_us
 
 ### 交流
 
+qq群号: 263558944
+
 ![](http://ww1.sinaimg.cn/large/006wYWbGly1g3rgqobfrpj30f00kkaaw.jpg)
