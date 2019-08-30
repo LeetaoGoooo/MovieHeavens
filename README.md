@@ -7,6 +7,7 @@
 命令行下
 
 ```python
+pip install -r requirements.txt
 python3 movies.py
 ```
 
@@ -34,6 +35,20 @@ pyinstaller -F -w ./movies.py ./movieSource/MovieHeaven.py ./movieSource/fake_us
 ![](http://ww2.sinaimg.cn/large/d9e82fa4jw1f7nembhbr1g20dq09nna1.gif)
 
 
+### 常见问题
+
+打包之后不能正常执行,尝试将打包参数 `-w` 移除,然后在命令行下启动程序,看一下控制台输出错误信息
+
+```ModuleNotFoundError: No module named 'PyQt5.sip'```
+
+**解决办法**
+
+使用下述命令打包
+
+```
+pyinstaller -F -w ./movies.py ./movieSource/MovieHeaven.py ./movieSource/fake_user_agent.py --hidden-import PyQt5.sip 
+```
+
 ### 交流
 
-[](./resources/qcode.jpg)
+![](./resources/qcode.jpg)
