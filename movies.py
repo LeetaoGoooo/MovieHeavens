@@ -143,12 +143,11 @@ class WorkThread(QThread):
         according to the value of the QComboBox,
         generate the right class of movie search
         """
-        movies, url, params = None, None, {
-            "kwtype": "0", "searchtype": "title"}
+        movies, url, params = None, None, {"typeid": "1"}
         select_source = self.movie_source_combobox.currentText()
         if select_source == self.tr('电影天堂'):
             movies = MovieHeaven()
-            url = "http://s.dydytt.net/plus/search.php"
+            # url = "http://s.dydytt.net/plus/s0.php"
             params["keyword"] = movie_name.encode('gb2312')
         return movies, url, params
 
