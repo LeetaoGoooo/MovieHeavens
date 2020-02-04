@@ -14,11 +14,11 @@ class MovieHeaven:
     def __init__(self, parent=None):
         self.__pool = ThreadPool(8)
         self.__all_page_details_url_list = []
-        self.__search_url = "http://s.ygdy8.com/plus/so.php"
+        self.__search_url = "http://s.dydytt.net/plus/s0.php"
         self.__search_domain = 'http://s.ygdy8.com'
         self.__download_domain = 'http://www.ygdy8.com'
-        self.__params = {"kwtype": "0",
-                         "searchtype": "title", "keyword": "leetao"}
+        self.__params = {"typeid": "1",
+                        "keyword": "leetao"}
 
     def __get_headers(self):
         return {"User-Agent": useragent_random()}
@@ -113,9 +113,9 @@ class MovieHeaven:
 
         magnet_down_pattern = re.compile(
             r'<a\s+href="(magnet:\?xt=.+)"><strong>')
-        magnet_url_list = ftp_down_pattern.findall(down_page_content)
+        magnet_url_list = magnet_down_pattern.findall(down_page_content)
         if len(magnet_url_list) > 0:
-            download_url_list.append(magnet_url_list[0])
+            download_url_list.append(magnet_url_list[0].replace("amp;", ""))
 
         return download_url_list
 
