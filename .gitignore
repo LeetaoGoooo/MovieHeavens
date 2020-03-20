@@ -7,4 +7,3 @@ __pycache__
 .cache
 .idea
 movies.spec
-tests/.pytest*

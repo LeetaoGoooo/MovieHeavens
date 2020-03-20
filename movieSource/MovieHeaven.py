@@ -2,25 +2,14 @@
 import requests
 import re
 import urllib
-import sys
-
 from movieSource.fake_user_agent import useragent_random
 from multiprocessing.dummy import Pool as ThreadPool
-from movieSource.platforms import BasePlatform
+import sys
 
 
-class MovieHeavenPlatform(BasePlatform):
-    # 类名, name, 文件名 必须一致
-    name = "MovieHeaven"
-    chinese_name = "电影天堂"
-
-    __slots__ = ['__pool',
-                 '__all_page_details_url_list',
-                 '__search_url',
-                 '__search_domain',
-                 '__download_domain',
-                 '__params'
-                 ]
+class MovieHeaven:
+    __slots__ = ['__pool', '__all_page_details_url_list', '__search_url', '__search_domain', '__download_domain',
+                 '__params']
 
     def __init__(self, parent=None):
         self.__pool = ThreadPool(8)
@@ -29,8 +18,7 @@ class MovieHeavenPlatform(BasePlatform):
         self.__search_domain = 'http://s.ygdy8.com'
         self.__download_domain = 'http://www.ygdy8.com'
         self.__params = {"typeid": "1",
-                         "keyword": "leetao"}
-
+                        "keyword": "leetao"}
 
     def __get_headers(self):
         return {"User-Agent": useragent_random()}
@@ -108,9 +96,7 @@ class MovieHeavenPlatform(BasePlatform):
         results_list = []
         down_page_content_url_list = [
             (self.__download_domain + url) for url in down_page_url_list]
-        for result_url_list in self.__pool.map(self.__get_down_page_content_url,
-                                               self.__pool.map(self.__search_movie_results,
-                                                               down_page_content_url_list)):
+        for result_url_list in self.__pool.map(self.__get_down_page_content_url, self.__pool.map(self.__search_movie_results, down_page_content_url_list)):
             if len(result_url_list) > 0:
                 results_list += result_url_list
 
@@ -142,4 +128,3 @@ class MovieHeavenPlatform(BasePlatform):
             movie_list = [
                 url for url in all_download_url_list if url is not None and url[-3:] not in ['zip', 'rar', 'exe']]
             return movie_list
-
