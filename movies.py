@@ -1,9 +1,18 @@
 # -*- encoding:utf-8 -*-
 import sys
-from PyQt5.QtWidgets import QDialog, QLabel, QPushButton, QLineEdit, QListWidget, QGridLayout, QComboBox, QMessageBox, QApplication, QMenuBar, QAction, QMainWindow, QWidget, QVBoxLayout
-from PyQt5.QtCore import pyqtSlot, QThread, QObject
+import logging
+
+from PyQt5.QtWidgets import QLabel, QPushButton, QLineEdit, QListWidget, QGridLayout, QComboBox, QMessageBox, QApplication, \
+    QAction, QMainWindow, QWidget, QVBoxLayout
+from PyQt5.QtCore import QThread
 from PyQt5.QtGui import QIcon, QPixmap, QImage
-from movieSource.MovieHeaven import MovieHeaven
+
+from movieSource.platforms.helper import get_all_platform_names
+from movieSource.commands.search_movie import SearchMovieCommand
+from movieSource.commands import Invoker
+
+
+all_platforms = get_all_platform_names()
 
 
 class ImageWindow(QMainWindow):
@@ -45,7 +54,7 @@ class LayoutDialog(QMainWindow):
 
         self.movie_source_label = QLabel(self.tr("选择片源:"))
         self.movie_source_combobox = QComboBox()
-        self.movie_source_combobox.addItem(self.tr('电影天堂'))
+        _ = [self.movie_source_combobox.addItem(self.tr(platform["chinese_name"])) for platform in all_platforms]
 
         self.search_push_button = QPushButton(self.tr("查询"))
 
@@ -145,18 +154,20 @@ class WorkThread(QThread):
         """
         movies, url, params = None, None, {"typeid": "1"}
         select_source = self.movie_source_combobox.currentText()
-        if select_source == self.tr('电影天堂'):
-            movies = MovieHeaven()
-            # url = "http://s.dydytt.net/plus/s0.php"
+        platform = next(filter(lambda platform: platform["chinese_name"] == select_source, all_platforms), None)
+        if platform:
+            movie_invoker = Invoker(SearchMovieCommand())
             params["keyword"] = movie_name.encode('gb2312')
-        return movies, url, params
+            return movie_invoker, platform["name"], url, params
+        raise ValueError("无效的平台")
 
     def run(self):
-        search_movies, url, params = self.get_select_movie_source(
-            self.movie_name)
         try:
-            self.movies_list = search_movies.get_display_content(url, params)
+            movie_invoker, name, url, params = self.get_select_movie_source(
+                self.movie_name)
+            self.movies_list = movie_invoker.run(name, url, params)
         except Exception as e:
+            logging.exception(e)
             self.movies_list.append(self.tr("过于频繁的访问"))
         finally:
             self.search_content_text_list.clear()
@@ -164,7 +175,12 @@ class WorkThread(QThread):
             self.tip_label.setText(self.tr("查询结束"))
 
 
-app = QApplication(sys.argv)
-dialog = LayoutDialog()
-dialog.show()
-app.exec_()
+def create_app():
+    app = QApplication(sys.argv)
+    dialog = LayoutDialog()
+    dialog.show()
+    app.exec_()
+
+
+if __name__ == '__main__':
+    create_app()
