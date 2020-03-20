@@ -21,12 +21,11 @@ class Command(metaclass=ABCMeta):
 class Invoker:
 
     def __init__(self, command):
-
         self._command = command
 
     @property
     def command(self):
-        return self.command
+        return self._command
 
     def run(self, *args, **kwargs):
         return self.command.execute(*args, **kwargs)

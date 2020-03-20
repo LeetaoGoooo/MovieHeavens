@@ -22,7 +22,7 @@ class SearchMovieCommand:
 
     def execute(self, name, *args, **kwargs):
         platform = self.get_platform_by_name(name)
-        return platform.get_display_content(*args, **kwargs)
+        return platform().get_display_content(*args, **kwargs)
 
 
 if __name__ == '__main__':

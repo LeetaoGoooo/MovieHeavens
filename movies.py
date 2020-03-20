@@ -1,5 +1,7 @@
 # -*- encoding:utf-8 -*-
 import sys
+import logging
+
 from PyQt5.QtWidgets import QLabel, QPushButton, QLineEdit, QListWidget, QGridLayout, QComboBox, QMessageBox, QApplication, \
     QAction, QMainWindow, QWidget, QVBoxLayout
 from PyQt5.QtCore import QThread
@@ -152,19 +154,20 @@ class WorkThread(QThread):
         """
         movies, url, params = None, None, {"typeid": "1"}
         select_source = self.movie_source_combobox.currentText()
-        name = next(filter(lambda platform: platform["chinese_name"] == select_source, all_platforms), None)
-        if name:
-            movies = Invoker(SearchMovieCommand())
-            return movies, name, url, params
+        platform = next(filter(lambda platform: platform["chinese_name"] == select_source, all_platforms), None)
+        if platform:
+            movie_invoker = Invoker(SearchMovieCommand())
+            params["keyword"] = movie_name.encode('gb2312')
+            return movie_invoker, platform["name"], url, params
         raise ValueError("无效的平台")
 
     def run(self):
         try:
-            search_movies, name, url, params = self.get_select_movie_source(
+            movie_invoker, name, url, params = self.get_select_movie_source(
                 self.movie_name)
-            self.movies_list = search_movies.run(name, url, params)
+            self.movies_list = movie_invoker.run(name, url, params)
         except Exception as e:
-            print(e)
+            logging.exception(e)
             self.movies_list.append(self.tr("过于频繁的访问"))
         finally:
             self.search_content_text_list.clear()
@@ -179,5 +182,5 @@ def create_app():
     app.exec_()
 
 
-create_app()
-print(all_platforms)
+if __name__ == '__main__':
+    create_app()
