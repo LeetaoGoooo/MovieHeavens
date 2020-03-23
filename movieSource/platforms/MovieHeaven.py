@@ -3,9 +3,11 @@ import requests
 import re
 import urllib
 import sys
+import gevent
 
 from movieSource.fake_user_agent import useragent_random
-from multiprocessing.dummy import Pool as ThreadPool
+# from multiprocessing.dummy import Pool
+from gevent.pool import Pool
 from movieSource.platforms import BasePlatform
 
 
@@ -14,7 +16,8 @@ class MovieHeavenPlatform(BasePlatform):
     name = "MovieHeaven"
     chinese_name = "电影天堂"
 
-    __slots__ = ['__pool',
+    __slots__ = ['__download_pool',
+                 '__search_pool'
                  '__all_page_details_url_list',
                  '__search_url',
                  '__search_domain',
@@ -23,14 +26,14 @@ class MovieHeavenPlatform(BasePlatform):
                  ]
 
     def __init__(self, parent=None):
-        self.__pool = ThreadPool(8)
+        self.__download_pool = Pool(8)
+        self.__search_pool = Pool(8)
         self.__all_page_details_url_list = []
         self.__search_url = "http://s.dydytt.net/plus/s0.php"
         self.__search_domain = 'http://s.ygdy8.com'
         self.__download_domain = 'http://www.ygdy8.com'
         self.__params = {"typeid": "1",
                          "keyword": "leetao"}
-
 
     def __get_headers(self):
         return {"User-Agent": useragent_random()}
@@ -108,14 +111,20 @@ class MovieHeavenPlatform(BasePlatform):
         results_list = []
         down_page_content_url_list = [
             (self.__download_domain + url) for url in down_page_url_list]
-        for result_url_list in self.__pool.map(self.__get_down_page_content_url,
-                                               self.__pool.map(self.__search_movie_results,
-                                                               down_page_content_url_list)):
-            if len(result_url_list) > 0:
-                results_list += result_url_list
 
-        self.__pool.close()
-        self.__pool.join()
+        down_page_content_urls = self.__search_pool.map(self.__search_movie_results,
+                                                        down_page_content_url_list)
+
+        self.__search_pool.join()
+
+        _ = [results_list.extend(result) for result in self.__download_pool.map(self.__get_down_page_content_url,
+                                                                                down_page_content_urls
+                                                                                )
+             if len(result) > 0
+             ]
+
+        self.__download_pool.join()
+
         return results_list
 
     def __get_down_page_content_url(self, down_page_content):
@@ -130,7 +139,6 @@ class MovieHeavenPlatform(BasePlatform):
         magnet_url_list = magnet_down_pattern.findall(down_page_content)
         if len(magnet_url_list) > 0:
             download_url_list.append(magnet_url_list[0].replace("amp;", ""))
-
         return download_url_list
 
     def get_display_content(self, url, params=None):
@@ -142,4 +150,3 @@ class MovieHeavenPlatform(BasePlatform):
             movie_list = [
                 url for url in all_download_url_list if url is not None and url[-3:] not in ['zip', 'rar', 'exe']]
             return movie_list
-
