@@ -4,10 +4,8 @@ import re
 import urllib
 import sys
 import gevent
-
-from movieSource.fake_user_agent import useragent_random
-# from multiprocessing.dummy import Pool
 from gevent.pool import Pool
+
 from movieSource.platforms import BasePlatform
 
 
@@ -35,15 +33,12 @@ class MovieHeavenPlatform(BasePlatform):
         self.__params = {"typeid": "1",
                          "keyword": "leetao"}
 
-    def __get_headers(self):
-        return {"User-Agent": useragent_random()}
-
     def __search_movie_results(self, url=None, params=None):
         if url is None:
             url = self.__search_url
 
         temp_results = requests.get(
-            url, params=params, headers=self.__get_headers())
+            url, params=params, headers=self.get_headers())
         temp_results.encoding = 'gb2312'
         return temp_results.text
 

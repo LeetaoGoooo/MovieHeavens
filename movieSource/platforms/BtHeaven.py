@@ -13,13 +13,10 @@ import requests
 import re
 import urllib
 import sys
-
 from urllib import parse
 from lxml import etree
-
-from movieSource.fake_user_agent import useragent_random
-# from multiprocessing.dummy import Pool as ThreadPool
 from gevent.pool import Pool
+
 from movieSource.platforms import BasePlatform
 
 
@@ -46,9 +43,6 @@ class BtHeavenPlatform(BasePlatform):
         self.__search_domain = 'http://s.ygdy8.com'
         self.__download_domain = 'https://www.bt-tt.com/'
 
-    def __get_headers(self):
-        return {"User-Agent": useragent_random()}
-
     def _get_the_search_movie_urls(self, keyword):
         """
         获取关键词搜索的所有电影的url
@@ -60,7 +54,7 @@ class BtHeavenPlatform(BasePlatform):
             "keyboard": keyword
         }
         search_movie_results = requests.post(
-            self.__search_url, data=payload, headers=self.__get_headers())
+            self.__search_url, data=payload, headers=self.get_headers())
         search_movie_results.encoding = "gb2312"
         html = search_movie_results.text
         return self.__parse_the_search_html(html)
@@ -79,7 +73,7 @@ class BtHeavenPlatform(BasePlatform):
     def _get_download_url(self, movie_detail_url):
         print("search", movie_detail_url)
         movie_detail_results = requests.get(
-            movie_detail_url, headers=self.__get_headers())
+            movie_detail_url, headers=self.get_headers())
         html = movie_detail_results.text
         return self.__parse_the_detail_html(html)
 
