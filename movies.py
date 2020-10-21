@@ -164,7 +164,11 @@ class WorkThread(QThread):
             self.tip_label.setText(self.tr("查询结束"))
 
 
-app = QApplication(sys.argv)
-dialog = LayoutDialog()
-dialog.show()
-app.exec_()
+def _main():
+    app = QApplication(sys.argv)
+    dialog = LayoutDialog()
+    dialog.show()
+    app.exec_()
+
+if __name__ == "__main__":
+    _main()
