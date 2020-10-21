@@ -14,7 +14,8 @@ python3 movies.py
 或者无需clone命令行下
 
 ```python
-pip install https://github.com/lt94/MovieHeavens/archive/master.zip
+pip install pipx
+pipx install https://github.com/lt94/MovieHeavens/archive/master.zip
 MovieHeavens
 ```
 
