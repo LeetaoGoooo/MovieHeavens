@@ -4,11 +4,18 @@
 
 ### 使用
 
-命令行下
+clone后命令行下
 
 ```python
 pip install -r requirements.txt
 python3 movies.py
+```
+
+或者无需clone命令行下
+
+```python
+pip install https://github.com/lt94/MovieHeavens/archive/master.zip
+MovieHeavens
 ```
 
 ### 打包
