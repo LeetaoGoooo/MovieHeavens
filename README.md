@@ -48,7 +48,3 @@ pyinstaller -F -w ./movies.py ./movieSource/MovieHeaven.py ./movieSource/fake_us
 ```
 pyinstaller -F -w ./movies.py ./movieSource/MovieHeaven.py ./movieSource/fake_user_agent.py --hidden-import PyQt5.sip 
 ```
-
-### 交流
-
-![](./resources/qcode.jpg)
